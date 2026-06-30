@@ -129,7 +129,7 @@ def appeal():
 @app.route("/log", methods=["GET"])
 def get_log():
     return jsonify({
-        "entries": audit_log
+        "entries": get_entries()
     })
 
 
