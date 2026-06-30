@@ -109,24 +109,21 @@ def appeal():
             "error": "Missing required fields: content_id and creator_reasoning"
         }), 400
 
-    content_id = data["content_id"]
-    creator_reasoning = data["creator_reasoning"]
+    result = submit_appeal(
+        data["content_id"],
+        data["creator_reasoning"]
+    )
 
-    for entry in audit_log:
-        if entry["content_id"] == content_id:
-
-            entry["status"] = "under_review"
-            entry["appeal_reasoning"] = creator_reasoning
-
-            return jsonify({
-                "message": "Appeal received successfully.",
-                "content_id": content_id,
-                "status": "under_review"
-            })
+    if result is None:
+        return jsonify({
+            "error": "Content ID not found."
+        }), 404
 
     return jsonify({
-        "error": "Content ID not found."
-    }), 404
+        "message": "Appeal received successfully.",
+        "content_id": result["content_id"],
+        "status": result["status"]
+    })
 
 
 @app.route("/log", methods=["GET"])
