@@ -89,7 +89,7 @@ def submit():
         "appeal_reasoning": None
     }
 
-    audit_log.append(log_entry)
+    add_entry(log_entry)
 
     return jsonify({
         "content_id": content_id,
