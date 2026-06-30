@@ -15,7 +15,8 @@ limiter = Limiter(
 )
 
 # In-memory audit log
-audit_log = []
+from audit_log import add_entry, get_entries
+from appeals import submit_appeal
 
 
 @app.route("/")
