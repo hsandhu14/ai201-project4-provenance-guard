@@ -3,6 +3,8 @@ from flask import Flask, request, jsonify
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 from detector import stylometric_score, llm_score
+from audit_log import add_entry, get_entries
+from appeals import submit_appeal
 
 app = Flask(__name__)
 
@@ -13,10 +15,6 @@ limiter = Limiter(
     default_limits=[],
     storage_uri="memory://",
 )
-
-# In-memory audit log
-from audit_log import add_entry, get_entries
-from appeals import submit_appeal
 
 
 @app.route("/")
